@@ -1,5 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import PictureCard from "./components/pictureCard";
 
 function App() {
   const initialState = {
@@ -8,7 +10,7 @@ function App() {
         name: "Isaac Newton",
         from: "1643",
         to: "1727",
-        image: "../Public/images/isaac-newton.jpg",
+        image: "./images/isaac-newton.jpg",
       },
     ],
   };
@@ -18,7 +20,9 @@ function App() {
   return (
     <div className="App">
       <div className="cardContainer">
-        <div className="row">first line</div>
+        <div className="row">
+          <PictureCard content={state.physicists[0]} />
+        </div>
         <div className="row">second line</div>
         <div className="row">third line</div>
       </div>
