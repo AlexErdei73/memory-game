@@ -40,9 +40,15 @@ function App() {
   const initialRenderOrder = [4, 0, 1, 3, 2];
 
   const [renderOrder, setRenderOrder] = useState(initialRenderOrder);
+  const [score, setScore] = useState(0);
+  const [highestScore, setHighestScore] = useState(0);
+  const [alreadyClicked, setAlreadyClicked] = useState([]);
+
+  console.log("score:", score);
+  console.log("highest score:", highestScore);
+  console.log(alreadyClicked);
 
   const generateRandomOrder = () => {
-    console.log("generateRandomOrder");
     let len = renderOrder.length;
     const copyRenderOrder = [...renderOrder];
     const newRenderOrder = [];
@@ -53,8 +59,33 @@ function App() {
       copyRenderOrder.splice(index, 1);
       len--;
     }
-    console.log(newRenderOrder);
     setRenderOrder(newRenderOrder);
+  };
+
+  const changeScore = (id) => {
+    let isMistakeMade = false;
+    alreadyClicked.forEach((index) => {
+      if (index === id) {
+        isMistakeMade = true;
+      }
+    });
+    if (isMistakeMade) {
+      if (score > highestScore) {
+        setHighestScore(score);
+      }
+      setScore(0);
+      setAlreadyClicked([]);
+    } else {
+      const copyAlreadyClicked = [...alreadyClicked];
+      copyAlreadyClicked.push(id);
+      setAlreadyClicked(copyAlreadyClicked);
+      setScore(score + 1);
+    }
+  };
+
+  const handleClick = (id) => {
+    changeScore(id);
+    generateRandomOrder();
   };
 
   return (
@@ -67,7 +98,7 @@ function App() {
                 content={physicists[index]}
                 key={index}
                 id={index}
-                onButtonClick={() => generateRandomOrder()}
+                onButtonClick={(id) => handleClick(id)}
               />
             );
           })}

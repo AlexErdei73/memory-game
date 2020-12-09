@@ -19,7 +19,7 @@ const PictureCard = (props) => {
             variant="primary"
             onClick={() => {
               console.log(id);
-              onButtonClick();
+              onButtonClick(id);
             }}
           >
             Choose Me!
