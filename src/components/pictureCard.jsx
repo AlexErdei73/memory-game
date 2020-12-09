@@ -2,26 +2,31 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 const PictureCard = (props) => {
-  const { name, from, to, image } = props.content;
+  const { content, id, onButtonClick } = props;
+  const { name, from, to, image } = content;
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={image} />
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-        <Card.Subtitle>
-          {from}-{to}
-        </Card.Subtitle>
-        <Button
-          variant="primary"
-          onClick={() => {
-            console.log(image);
-          }}
-        >
-          Choose Me!
-        </Button>
-      </Card.Body>
-    </Card>
+    <div className="col-3">
+      <Card className="w-75 m-4">
+        <Card.Img variant="top" src={image} width="248" height="308" />
+        <Card.Body>
+          <Card.Title>{name}</Card.Title>
+          <Card.Subtitle>
+            {from}-{to}
+          </Card.Subtitle>
+          <Button
+            className="btn-sm mt-3"
+            variant="primary"
+            onClick={() => {
+              console.log(id);
+              onButtonClick();
+            }}
+          >
+            Choose Me!
+          </Button>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 
