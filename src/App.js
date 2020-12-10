@@ -45,7 +45,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
   const [alreadyClicked, setAlreadyClicked] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [modal, setModal] = useState({ id: 0, show: false });
 
   const generateRandomOrder = () => {
     let len = renderOrder.length;
@@ -82,14 +82,24 @@ function App() {
     }
   };
 
+  const showModal = (id) => {
+    const newModal = {
+      id: id,
+      show: true,
+    };
+    setModal(newModal);
+  };
+
   const handleClick = (id) => {
-    setShowModal(true);
+    showModal(id);
     changeScore(id);
     generateRandomOrder();
   };
 
   const hideModal = () => {
-    setShowModal(false);
+    const newModal = { ...modal };
+    newModal.show = false;
+    setModal(newModal);
   };
 
   return (
@@ -109,9 +119,9 @@ function App() {
           })}
         </div>
       </div>
-      <Modal show={showModal} hide={hideModal}>
+      <Modal show={modal.show} hide={hideModal}>
         <Modal.Title bg="success" text="light">
-          Title
+          {physicists[modal.id].name}
         </Modal.Title>
         <Modal.Body>This is the body</Modal.Body>
         <Modal.Footer>
