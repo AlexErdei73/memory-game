@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PictureCard from "./components/pictureCard";
 import TitleBar from "./components/titleBar";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 
 function App() {
   const physicists = [
@@ -45,6 +45,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
   const [alreadyClicked, setAlreadyClicked] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const generateRandomOrder = () => {
     let len = renderOrder.length;
@@ -82,8 +83,13 @@ function App() {
   };
 
   const handleClick = (id) => {
+    setShowModal(true);
     changeScore(id);
     generateRandomOrder();
+  };
+
+  const hideModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -103,6 +109,15 @@ function App() {
           })}
         </div>
       </div>
+      <Modal show={showModal} hide={hideModal}>
+        <Modal.Title bg="success" text="light">
+          Title
+        </Modal.Title>
+        <Modal.Body>This is the body</Modal.Body>
+        <Modal.Footer>
+          <Button onClick={hideModal}>OK</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
