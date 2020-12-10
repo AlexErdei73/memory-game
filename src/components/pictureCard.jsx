@@ -17,10 +17,7 @@ const PictureCard = (props) => {
           <Button
             className="btn-sm mt-3"
             variant="primary"
-            onClick={() => {
-              console.log(id);
-              onButtonClick(id);
-            }}
+            onClick={() => onButtonClick(id)}
           >
             Choose Me!
           </Button>

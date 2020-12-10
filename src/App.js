@@ -46,10 +46,6 @@ function App() {
   const [highestScore, setHighestScore] = useState(0);
   const [alreadyClicked, setAlreadyClicked] = useState([]);
 
-  console.log("score:", score);
-  console.log("highest score:", highestScore);
-  console.log(alreadyClicked);
-
   const generateRandomOrder = () => {
     let len = renderOrder.length;
     const copyRenderOrder = [...renderOrder];
