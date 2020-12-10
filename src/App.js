@@ -45,7 +45,11 @@ function App() {
   const [score, setScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
   const [alreadyClicked, setAlreadyClicked] = useState([]);
-  const [modal, setModal] = useState({ id: 0, show: false });
+  const [modal, setModal] = useState({
+    id: 0,
+    show: false,
+    isMistakeMade: false,
+  });
 
   const generateRandomOrder = () => {
     let len = renderOrder.length;
@@ -61,14 +65,18 @@ function App() {
     setRenderOrder(newRenderOrder);
   };
 
-  const changeScore = (id) => {
+  function isMistakeMade(id) {
     let isMistakeMade = false;
     alreadyClicked.forEach((index) => {
       if (index === id) {
         isMistakeMade = true;
       }
     });
-    if (isMistakeMade) {
+    return isMistakeMade;
+  }
+
+  const changeScore = (id) => {
+    if (isMistakeMade(id)) {
       if (score > highestScore) {
         setHighestScore(score);
       }
@@ -86,12 +94,14 @@ function App() {
     const newModal = {
       id: id,
       show: true,
+      isMistakeMade: isMistakeMade(id),
     };
     setModal(newModal);
   };
 
   const handleClick = (id) => {
-    showModal(id);
+    console.log(id);
+    showModal(id, alreadyClicked);
     changeScore(id);
     generateRandomOrder();
   };
@@ -101,6 +111,20 @@ function App() {
     newModal.show = false;
     setModal(newModal);
   };
+
+  function getVariantName() {
+    let className = "";
+    if (modal.isMistakeMade) {
+      className = "danger";
+    } else {
+      className = "success";
+    }
+    return className;
+  }
+
+  function getModalClasses() {
+    return "bg-" + getVariantName() + " text-light";
+  }
 
   return (
     <div className="App bg-secondary">
@@ -119,13 +143,20 @@ function App() {
           })}
         </div>
       </div>
-      <Modal show={modal.show} hide={hideModal}>
-        <Modal.Title bg="success" text="light">
-          {physicists[modal.id].name}
+      <Modal show={modal.show}>
+        <Modal.Title className={getModalClasses()}>
+          {(modal.isMistakeMade && "Ouch!") ||
+            physicists[modal.id].name + " quote"}
         </Modal.Title>
-        <Modal.Body>This is the body</Modal.Body>
+        <Modal.Body>
+          {(modal.isMistakeMade &&
+            "You have lost your score becuse of choosing the same physicist again.") ||
+            "This is the body."}
+        </Modal.Body>
         <Modal.Footer>
-          <Button onClick={hideModal}>OK</Button>
+          <Button variant={getVariantName()} onClick={hideModal}>
+            OK
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>
