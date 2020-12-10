@@ -2,6 +2,8 @@ import "./App.css";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PictureCard from "./components/pictureCard";
+import TitleBar from "./components/titleBar";
+import { Modal } from "react-bootstrap";
 
 function App() {
   const physicists = [
@@ -90,6 +92,7 @@ function App() {
 
   return (
     <div className="App bg-secondary">
+      <TitleBar score={score} highestScore={highestScore} />
       <div className="cardContainer">
         <div className="row">
           {renderOrder.map((index) => {
