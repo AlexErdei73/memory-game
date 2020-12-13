@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PictureCard from "./components/pictureCard";
 import TitleBar from "./components/titleBar";
@@ -687,13 +687,17 @@ belief, and it’s a good thing too.`,
 
   const [renderOrder, setRenderOrder] = useState(initialRenderOrder);
   const [score, setScore] = useState(0);
-  const [highestScore, setHighestScore] = useState(0);
+  const [highestScore, setHighestScore] = useState(loadTopScore());
   const [alreadyClicked, setAlreadyClicked] = useState([]);
   const [modal, setModal] = useState({
     id: 0,
     show: false,
     isMistakeMade: false,
   });
+
+  useEffect(() => {
+    saveTopScore();
+  }, [highestScore]);
 
   const generateRandomOrder = () => {
     let len = renderOrder.length;
@@ -774,6 +778,16 @@ belief, and it’s a good thing too.`,
     const len = physicists[id].quotes.length;
     const randomIndex = Math.floor(Math.random() * len);
     return physicists[id].quotes[randomIndex];
+  }
+
+  function saveTopScore() {
+    localStorage.setItem("topScore", highestScore.toString());
+  }
+
+  function loadTopScore() {
+    const result = Number(localStorage.getItem("topScore"));
+    if (result) return result;
+    else return 0;
   }
 
   return (
