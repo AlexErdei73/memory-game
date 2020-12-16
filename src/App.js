@@ -748,7 +748,6 @@ belief, and it’s a good thing too.`,
   };
 
   const handleClick = (id) => {
-    console.log(id);
     showModal(id, alreadyClicked);
     changeScore(id);
     generateRandomOrder();
@@ -796,7 +795,6 @@ belief, and it’s a good thing too.`,
       <div className="cardContainer">
         <div className="row">
           {renderOrder.map((index) => {
-            console.log(index);
             return (
               <PictureCard
                 content={physicists[index]}
@@ -808,7 +806,7 @@ belief, and it’s a good thing too.`,
           })}
         </div>
       </div>
-      <Modal show={modal.show}>
+      <Modal show={modal.show} onHide={hideModal}>
         <Modal.Title className={getModalClasses()}>
           {(modal.isMistakeMade && "Ouch!") ||
             physicists[modal.id].name + " quote"}
