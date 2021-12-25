@@ -6,8 +6,8 @@ const PictureCard = (props) => {
   const { name, from, to, image } = content;
 
   return (
-    <div className="col-md-3 col-sm-6 col-xs-12 pt-5">
-      <Card className="w-75 m-4">
+    <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 pt-5">
+      <Card className="m-4 mx-auto" style={{ width: "220px" }}>
         <Card.Img variant="top" src={image} width="248" height="308" />
         <Card.Body>
           <Card.Title>{name}</Card.Title>
